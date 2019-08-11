@@ -53,18 +53,20 @@ class Game{
     handleInteraction(letter){
         const $button = $(`.keyrow button:contains(${letter})`);
 
-        $button.removeClass('key');
+        if ($button.hasClass('key')){
+            $button.removeClass('key');
 
-        if (this.activePhrase.checkLetter(letter)) {
-            $button.addClass('chosen');
-            this.activePhrase.showMatchedLetter(letter);
-            if (this.checkForWin()) {
-                this.gameOver(true);
+            if (this.activePhrase.checkLetter(letter)) {
+                $button.addClass('chosen');
+                this.activePhrase.showMatchedLetter(letter);
+                if (this.checkForWin()) {
+                    this.gameOver(true);
+                }
+            } else {
+                $button.addClass('wrong');
+                this.animateCSS('#scoreboard', 'flash');
+                this.removeLife();
             }
-        } else {
-            $button.addClass('wrong');
-            this.animateCSS('#scoreboard', 'flash');
-            this.removeLife();
         }
     }
 
